@@ -1,5 +1,3 @@
-# frontend_memoria_colmena_abejas
-
 ## Project setup
 ```
 npm install
