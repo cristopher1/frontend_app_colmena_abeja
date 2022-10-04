@@ -10,7 +10,13 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+const CustomerAxios = axios.create({
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
+});
+
 const app = createApp(App);
 app.use(VueSweetalert2);
-app.use(VueAxios, axios);
+app.use(VueAxios, CustomerAxios);
 app.mount('#app');

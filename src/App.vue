@@ -2,7 +2,7 @@
   <!-- Navigation-->
         <nav class="navbar bg-dark static-top">
             <div class="container">
-                <a class="navbar-brand text-color">Api Colmena Abeja</a>
+                <a class="navbar-brand text-color">App Colmena Abeja</a>
             </div>
         </nav>
         <!-- Masthead-->

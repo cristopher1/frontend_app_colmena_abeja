@@ -28,29 +28,28 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.isConfirmed) {
+        confirmButtonText: 'Si',
+        preConfirm: () => {
           this.$swal({
             title: 'Procesando audio',
+            allowOutsideClick: false,
             didOpen: () => {
-              this.$swal.showLoading()
+                this.$swal.showLoading();
             }
           })
-          const formData = new FormData();
+          const formData = new FormData()
           formData.append('audio', this.$refs.audio.files[0])
-          const axios = this.axios.create({
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          axios.post("http://192.168.99.100:80/estado/abeja_reina/", formData)
+          this.axios.post("http://192.168.99.100:80/estado/abeja_reina/", formData)
             .then((response) => {
               this.$swal.close();
               this.$swal({
                 icon: 'success',
                 title: 'Resultado',
-                text: response,
+                html: `
+                        Presencia de abeja reina: ${ (response.data.ABEJA_REINA.SI * 100).toFixed(2) } % </br>
+                        Ausencia de abeja reina: ${ (response.data.ABEJA_REINA.NO * 100).toFixed(2) } %
+                      `,
+                allowOutsideClick: false,
               });
             })
             .catch((error) => {
