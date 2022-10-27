@@ -25,7 +25,7 @@
                         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                             <div class="features-icons-icon d-flex"><i class="bi-file-text m-auto text-primary"></i></div>
                             <h3>Seleccionar audio</h3>
-                            <p class="lead mb-0">Seleccione el archivo de audio que desea procesar.</p>
+                            <p class="lead mb-0">Seleccione el archivo de audio que contiene la grabación del zumbido de la colmena a procesar.</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -76,7 +76,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 h-100 text-center text-lg-start my-auto">
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; Api Colmena Abeja 2022. Basado en diseño extraído de <a href="https://startbootstrap.com/theme/landing-page" target="_blank"> startbootstrap. </a></p>
+                        <p class="text-muted small mb-4 mb-lg-0">&copy; App Colmena Abeja 2022. Basado en diseño extraído de <a href="https://startbootstrap.com/theme/landing-page" target="_blank"> startbootstrap. </a></p>
                     </div>
                 </div>
             </div>

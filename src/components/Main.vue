@@ -6,7 +6,7 @@
     <form>
       <div class="mb-3">
         <label for="formFile" class="form-label">Seleccione un archivo de audio</label>
-        <input class="form-control" type="file" ref="audio" id="formFile">
+        <input class="form-control" type="file" ref="audio" id="formFile" accept="audio/*">
       </div>
       <button @click.prevent="enviar" class="btn btn-primary">Enviar</button>
     </form>
