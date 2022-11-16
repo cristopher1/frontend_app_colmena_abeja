@@ -5,7 +5,6 @@
   <div>
     <form>
       <div class="mb-3">
-        <label for="formFile" class="form-label">Seleccione un archivo de audio</label>
         <input class="form-control" type="file" ref="audio" id="formFile" accept="audio/*">
       </div>
       <button @click.prevent="enviar" class="btn btn-primary">Enviar</button>
@@ -21,9 +20,11 @@ export default {
   },
   methods: {
     enviar: function () {
+      const archivo = this.$refs.audio.files[0];
+      const nombreArchivo = archivo.name;
       this.$swal({
-        title: '¿Seguro quiere enviar este audio?',
-        text: "Se enviará este audio al servidor para ser procesado",
+        title: `¿Seguro quiere procesar el archivo de audio: ${nombreArchivo}?`,
+        text: "Se enviará ese audio al servidor para ser procesado",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -38,16 +39,27 @@ export default {
             }
           })
           const formData = new FormData()
-          formData.append('audio', this.$refs.audio.files[0])
+          formData.append('audio', archivo)
           this.axios.post("http://192.168.99.100:80/estado/abeja_reina/", formData)
             .then((response) => {
+              const nombreArchivoAudio = response.data.audio
+              const siPresenciaAnomalia = response.data.anomalias[0].si
+              const noPresenciaAnomalia = response.data.anomalias[0].no
+              let conclusion = "La colmena no tiene abeja reina"
+              if (noPresenciaAnomalia == siPresenciaAnomalia) {
+                conclusion = "No se puede determinar con claridad si hay o no abeja reina en la colmena"
+              }
+              else if (noPresenciaAnomalia < siPresenciaAnomalia) {
+                conclusion = "La colmena tiene abeja reina"
+              }
               this.$swal.close();
               this.$swal({
                 icon: 'success',
-                title: 'Resultado',
+                title: `Resultados obtenidos a partir del archivo de audio: ${nombreArchivoAudio}`,
                 html: `
-                        Presencia de abeja reina: ${ (response.data.ABEJA_REINA.SI * 100).toFixed(2) } % </br>
-                        Ausencia de abeja reina: ${ (response.data.ABEJA_REINA.NO * 100).toFixed(2) } %
+                        </br> <h4>${conclusion}</h4> </br>
+                        Probabilidad presencia de abeja reina: <strong>${(siPresenciaAnomalia * 100).toFixed(2)}%</strong> </br>
+                        Probabilidad ausencia de abeja reina: <strong>${(noPresenciaAnomalia * 100).toFixed(2)}%</strong> </br></br>
                       `,
                 allowOutsideClick: false,
               });
@@ -71,7 +83,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
-  margin: 40px 0 0;
+  margin: 20px;
+  color: white;
 }
 
 button {
