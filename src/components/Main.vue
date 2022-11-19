@@ -40,7 +40,7 @@ export default {
           })
           const formData = new FormData()
           formData.append('audio', archivo)
-          this.axios.post("http://192.168.99.100:80/estado/abeja_reina/", formData)
+          this.axios.post(process.env.VUE_APP_URL_API, formData)
             .then((response) => {
               const nombreArchivoAudio = response.data.audio
               const siPresenciaAnomalia = response.data.anomalias[0].si
