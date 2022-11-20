@@ -19,6 +19,7 @@
                     </div>
                 </div>
             </div>
+            <p class="fuente">Fuente de la imagen: <a href="https://www.portalfruticola.com/noticias/2021/05/24/principios-basicos-en-apicultura-manejo-de-colmena-y-abejas/" target="_blank">https://www.portalfruticola.com/noticias/2021/05/24/principios-basicos-en-apicultura-manejo-de-colmena-y-abejas/</a></p>
         </header>
         <!-- Icons Grid-->
         <section id="informacion-de-uso" class="features-icons bg-dark text-center">
@@ -123,6 +124,15 @@ a[href] {
 
 a[href]:hover {
     color: #0d6efd;
+}
+
+p.fuente {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: white;
+    padding: 0 10px;
+    font-size: 0.7em;
 }
 
 </style>

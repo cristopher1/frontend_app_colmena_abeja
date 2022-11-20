@@ -82,6 +82,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 h3 {
   margin: 20px;
   color: white;
@@ -90,4 +91,5 @@ h3 {
 button {
   background-color: #645CAA;
 }
+
 </style>
