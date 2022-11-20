@@ -29,7 +29,8 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si',
+        confirmButtonText: 'Si, enviar.',
+        cancelButtonText: 'No, cancelar.',
         preConfirm: () => {
           this.$swal({
             title: 'Procesando audio',
@@ -45,21 +46,45 @@ export default {
               const nombreArchivoAudio = response.data.audio
               const siPresenciaAnomalia = response.data.anomalias[0].si
               const noPresenciaAnomalia = response.data.anomalias[0].no
-              let conclusion = "La colmena no tiene abeja reina"
+              let swal_respuesta = {
+                icon: "error",
+                estilo: {
+                    conclusion: "text-danger",
+                    presencia_anomalia: "text-danger",
+                    ausencia_anomalia: "text-muted",                   
+                    },
+                conclusion: "La colmena no tiene abeja reina"
+              }
               if (noPresenciaAnomalia == siPresenciaAnomalia) {
-                conclusion = "No se puede determinar con claridad si hay o no abeja reina en la colmena"
+                swal_respuesta = {
+                    icon: "warning",
+                    estilo: {
+                        conclusion: "text-warning",
+                        presencia_anomalia: "text-warning",
+                        ausencia_anomalia: "text-warning"
+                    },
+                    conclusion: "No se puede determinar con claridad si hay o no abeja reina en la colmena"
+                }
               }
               else if (noPresenciaAnomalia < siPresenciaAnomalia) {
-                conclusion = "La colmena tiene abeja reina"
+                swal_respuesta = {
+                    icon: "success",
+                    estilo: {
+                        conclusion: "text-success",
+                        presencia_anomalia: "text-muted",
+                        ausencia_anomalia: "text-success"
+                        },
+                    conclusion: "La colmena tiene abeja reina"
+                }
               }
               this.$swal.close();
               this.$swal({
-                icon: 'success',
+                icon: `${swal_respuesta.icon}`,
                 title: `Resultados obtenidos a partir del archivo de audio: ${nombreArchivoAudio}`,
                 html: `
-                        </br> <h4>${conclusion}</h4> </br>
-                        Probabilidad presencia de abeja reina: <strong>${(siPresenciaAnomalia * 100).toFixed(2)}%</strong> </br>
-                        Probabilidad ausencia de abeja reina: <strong>${(noPresenciaAnomalia * 100).toFixed(2)}%</strong> </br></br>
+                        </br> <h4 class="${swal_respuesta.estilo.conclusion}">${swal_respuesta.conclusion}</h4> </br>
+                        Probabilidad presencia de abeja reina: <strong class="${swal_respuesta.estilo.ausencia_anomalia}">${(siPresenciaAnomalia * 100).toFixed(2)}%</strong> </br>
+                        Probabilidad ausencia de abeja reina: <strong class="${swal_respuesta.estilo.presencia_anomalia}">${(noPresenciaAnomalia * 100).toFixed(2)}%</strong> </br></br>
                       `,
                 allowOutsideClick: false,
               });
