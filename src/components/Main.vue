@@ -83,8 +83,12 @@ export default {
                 title: `Resultados obtenidos a partir del archivo de audio: ${nombreArchivoAudio}`,
                 html: `
                         </br> <h4 class="${swal_respuesta.estilo.conclusion}">${swal_respuesta.conclusion}</h4> </br>
-                        Probabilidad presencia de abeja reina: <strong class="${swal_respuesta.estilo.ausencia_anomalia}">${(siPresenciaAnomalia * 100).toFixed(2)}%</strong> </br>
-                        Probabilidad ausencia de abeja reina: <strong class="${swal_respuesta.estilo.presencia_anomalia}">${(noPresenciaAnomalia * 100).toFixed(2)}%</strong> </br></br>
+                        <div class="${swal_respuesta.estilo.ausencia_anomalia}">
+                            Probabilidad presencia de abeja reina: <strong>${(siPresenciaAnomalia * 100).toFixed(2)}%</strong>
+                        </div>
+                        <div class="${swal_respuesta.estilo.presencia_anomalia}">
+                            Probabilidad ausencia de abeja reina: <strong>${(noPresenciaAnomalia * 100).toFixed(2)}%</strong>
+                        </div>
                       `,
                 allowOutsideClick: false,
               });
