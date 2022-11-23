@@ -19,6 +19,18 @@ export default {
     msg: String
   },
   methods: {
+    formatearRespuesta: function (icon, estiloConclusion, estiloPresenciaAnomalia,
+    estiloAusenciaAnomalia, conclusion) {
+        return { 
+            icon: icon,
+            estilo: {
+                conclusion: estiloConclusion,
+                presencia_anomalia: estiloPresenciaAnomalia,
+                ausencia_anomalia: estiloAusenciaAnomalia,
+            },
+            conclusion: conclusion
+        }
+    },
     enviar: function () {
       const archivo = this.$refs.audio.files[0];
       const nombreArchivo = archivo.name;
@@ -46,47 +58,36 @@ export default {
               const nombreArchivoAudio = response.data.audio
               const siPresenciaAnomalia = response.data.anomalias[0].si
               const noPresenciaAnomalia = response.data.anomalias[0].no
-              let swal_respuesta = {
-                icon: "error",
-                estilo: {
-                    conclusion: "text-danger",
-                    presencia_anomalia: "text-danger",
-                    ausencia_anomalia: "text-muted",                   
-                    },
-                conclusion: "La colmena no tiene abeja reina"
-              }
+              let formatoRespuesta = this.formatearRespuesta(
+                                                "error", "text-danger",
+                                                "text-danger", "text-muted",
+                                                "La colmena no tiene abeja reina"
+                                                )
               if (noPresenciaAnomalia == siPresenciaAnomalia) {
-                swal_respuesta = {
-                    icon: "warning",
-                    estilo: {
-                        conclusion: "text-warning",
-                        presencia_anomalia: "text-warning",
-                        ausencia_anomalia: "text-warning"
-                    },
-                    conclusion: "No se puede determinar con claridad si hay o no abeja reina en la colmena"
-                }
+                formatoRespuesta = this.formatearRespuesta(
+                                                "warning", "text-warning",
+                                                "text-warning", "text-warning",
+                                                `No se puede determinar con claridad
+                                                si hay o no abeja reina en la colmena`
+                                                )
               }
               else if (noPresenciaAnomalia < siPresenciaAnomalia) {
-                swal_respuesta = {
-                    icon: "success",
-                    estilo: {
-                        conclusion: "text-success",
-                        presencia_anomalia: "text-muted",
-                        ausencia_anomalia: "text-success"
-                        },
-                    conclusion: "La colmena tiene abeja reina"
-                }
+                formatoRespuesta = this.formatearRespuesta(
+                                                "success", "text-success",
+                                                "text-muted", "text-success",
+                                                "La colmena tiene abeja reina"
+                                                )
               }
               this.$swal.close();
               this.$swal({
-                icon: `${swal_respuesta.icon}`,
+                icon: `${formatoRespuesta.icon}`,
                 title: `Resultados obtenidos a partir del archivo de audio: ${nombreArchivoAudio}`,
                 html: `
-                        </br> <h4 class="${swal_respuesta.estilo.conclusion}">${swal_respuesta.conclusion}</h4> </br>
-                        <div class="${swal_respuesta.estilo.ausencia_anomalia}">
+                        </br> <h4 class="${formatoRespuesta.estilo.conclusion}">${formatoRespuesta.conclusion}</h4> </br>
+                        <div class="${formatoRespuesta.estilo.ausencia_anomalia}">
                             Probabilidad presencia de abeja reina: <strong>${(siPresenciaAnomalia * 100).toFixed(2)}%</strong>
                         </div>
-                        <div class="${swal_respuesta.estilo.presencia_anomalia}">
+                        <div class="${formatoRespuesta.estilo.presencia_anomalia}">
                             Probabilidad ausencia de abeja reina: <strong>${(noPresenciaAnomalia * 100).toFixed(2)}%</strong>
                         </div>
                       `,
