@@ -34,6 +34,7 @@ export default {
     enviar: function () {
       const archivo = this.$refs.audio.files[0];
       const nombreArchivo = archivo.name;
+      const zonaHoraria = Intl.DateTimeFormat().resolvedOptions().timeZone;
       this.$swal({
         title: `¿Seguro quiere procesar el archivo de audio: ${nombreArchivo}?`,
         text: "Se enviará ese audio al servidor para ser procesado",
@@ -53,11 +54,14 @@ export default {
           })
           const formData = new FormData()
           formData.append('audio', archivo)
+          formData.append('zonaHoraria', zonaHoraria)
           this.axios.post(process.env.VUE_APP_URL_API, formData)
             .then((response) => {
               const nombreArchivoAudio = response.data.audio
               const siPresenciaAnomalia = response.data.anomalias[0].si
               const noPresenciaAnomalia = response.data.anomalias[0].no
+              const fecha = response.data.fecha
+              const hora = response.data.hora
               let formatoRespuesta = this.formatearRespuesta(
                                                 "error", "text-danger",
                                                 "text-danger", "text-muted",
@@ -83,13 +87,16 @@ export default {
                 icon: `${formatoRespuesta.icon}`,
                 title: `Resultados obtenidos a partir del archivo de audio: ${nombreArchivoAudio}`,
                 html: `
-                        </br> <h4 class="${formatoRespuesta.estilo.conclusion}">${formatoRespuesta.conclusion}</h4> </br>
-                        <div class="${formatoRespuesta.estilo.ausencia_anomalia}">
-                            Probabilidad presencia de abeja reina: <strong>${(siPresenciaAnomalia * 100).toFixed(2)}%</strong>
-                        </div>
-                        <div class="${formatoRespuesta.estilo.presencia_anomalia}">
-                            Probabilidad ausencia de abeja reina: <strong>${(noPresenciaAnomalia * 100).toFixed(2)}%</strong>
-                        </div>
+                        </br>
+                          <div class="${formatoRespuesta.estilo.ausencia_anomalia}">
+                              Probabilidad presencia de abeja reina: <strong>${(siPresenciaAnomalia * 100).toFixed(2)}%</strong>
+                          </div>
+                          <div class="${formatoRespuesta.estilo.presencia_anomalia}">
+                              Probabilidad ausencia de abeja reina: <strong>${(noPresenciaAnomalia * 100).toFixed(2)}%</strong>
+                          </div>
+                        </br>
+                        <h4 class="${formatoRespuesta.estilo.conclusion}">${formatoRespuesta.conclusion}</h4> </br>
+                        <h5> Audio procesado el día ${fecha} a las ${hora} </h5>
                       `,
                 allowOutsideClick: false,
               });
