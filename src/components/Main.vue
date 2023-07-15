@@ -52,10 +52,13 @@ export default {
                 this.$swal.showLoading();
             }
           })
+          const { VUE_APP_PROTOCOL, VUE_APP_HOST, VUE_APP_PORT, VUE_APP_PATH } = process.env
+          const API_URL = `${VUE_APP_PROTOCOL}://${VUE_APP_HOST}:${VUE_APP_PORT}${VUE_APP_PATH}`
+          console.log(API_URL)
           const formData = new FormData()
           formData.append('audio', archivo)
           formData.append('zonaHoraria', zonaHoraria)
-          this.axios.post(process.env.VUE_APP_URL_API, formData)
+          this.axios.post(API_URL, formData)
             .then((response) => {
               const nombreArchivoAudio = response.data.audio
               const siPresenciaAnomalia = response.data.anomalias[0].si
