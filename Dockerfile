@@ -2,6 +2,10 @@ FROM node:16.13.2 as base
 
 FROM base as development
 
+RUN apt-get update && apt-get install -y \
+    # Instalar editor de texto, para revisar archivos dentro del contenedor
+    nano
+
 # Se establece el directorio de trabajo actual
 WORKDIR /usr/src/colmena_memoria
 
