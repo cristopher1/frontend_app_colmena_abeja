@@ -52,8 +52,8 @@ export default {
                 this.$swal.showLoading();
             }
           })
-          const { VUE_APP_PROTOCOL, VUE_APP_HOST, VUE_APP_PORT, VUE_APP_PATH } = process.env
-          const API_URL = `${VUE_APP_PROTOCOL}://${VUE_APP_HOST}:${VUE_APP_PORT}${VUE_APP_PATH}`
+          const { VUE_APP_API_PROTOCOL, VUE_APP_API_HOST, VUE_APP_API_PORT, VUE_APP_API_PATH } = process.env
+          const API_URL = `${VUE_APP_API_PROTOCOL}://${VUE_APP_API_HOST}:${VUE_APP_API_PORT}${VUE_APP_API_PATH}`
           console.log(API_URL)
           const formData = new FormData()
           formData.append('audio', archivo)
