@@ -1,4 +1,4 @@
-FROM node:16.13.2 as base
+FROM node:16.13.2@sha256:2033f4cc18f9d8b5d0baa7f276aaeffd202e1a2c6fe9af408af05a34fe68cbfb as base
 
 FROM base as development
 
