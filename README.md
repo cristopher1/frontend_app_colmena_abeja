@@ -48,7 +48,7 @@ https://github.com/cristopher1/frontend_app_colmena_abeja/blob/e40f08b27ad304aee
 ## <a id="Docker"></a> [Docker](#dockerfile)
 
 El sistema incluye un archivo **Dockerfile**, para poder facilitar su despliegue.
-https://github.com/cristopher1/frontend_app_colmena_abeja/blob/e40f08b27ad304aee5951bce663e31e9584840cf/Dockerfile#L1-L56
+https://github.com/cristopher1/frontend_app_colmena_abeja/blob/dc908da991da06bbf0ee49a10c84531820cb2b2b/Dockerfile#L1-L56
 
 dividido en 4 etapas: base, development, build y production.
 
