@@ -43,7 +43,7 @@ COPY . ./
 # Se compila la aplicación para producción
 RUN npm run build
 
-FROM nginx:1.23.1 as production
+FROM nginx:1.23.1@sha256:2f770d2fe27bc85f68fd7fe6a63900ef7076bc703022fe81b980377fe3d27b70 as production
 
 # Se copian los archivos compilados y minificados generados en
 # la etapa build (carpeta dist) a nginx
